@@ -30,7 +30,7 @@
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Modal A</h5>
+              <h5 className="modal-title">Modal B</h5>
               <button type="button" className="close" aria-label="Close" onClick={toggleA}>
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -72,9 +72,9 @@
                 type="button"
                 className="btn"
                 style={{ color: "#ff7f50" }}
-                onClick={toggleB}
+                onClick={toggleA}
               >
-                US Contacts
+                All Countries
               </button>
             </div>
           </div>
