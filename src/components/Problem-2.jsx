@@ -1,9 +1,28 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 const Problem2 = () => {
-  const [isModalContactOpen, setModalContactOpen] = useState(false);
-  const [isModalUSOpen, setModalUSOpen] = useState(false);
+    const [isModalAOpen, setModalAOpen] = useState(false);
+    const [isModalBOpen, setModalBOpen] = useState(false);
+    const [isModalCOpen, setModalCOpen] = useState(false);
+    const [onlyEven, setOnlyEven] = useState(false);
+    const [selectedContact, setSelectedContact] = useState(null);
+    const history = useHistory();
 
+    const toggleModalA = () => {
+        setModalAOpen(!isModalAOpen);
+        history.push(isModalAOpen ? '/' : '/modal-a');
+      };
+    
+      const toggleModalB = () => {
+        setModalBOpen(!isModalBOpen);
+        history.push(isModalBOpen ? '/' : '/modal-b');
+      };
+    
+      const toggleModalC = (contact) => {
+        setSelectedContact(contact);
+        setModalCOpen(!isModalCOpen);
+      };
   return (
     <div className="container">
       <div className="row justify-content-center mt-5">
@@ -52,9 +71,9 @@ const Problem2 = () => {
                 >
                   Close
                 </button>
-                <button type="button" className="btn btn-primary">
-                  Save changes
-                </button>
+                <Link to="/all-contact"  type="button" className="btn " style={{color:" #46139f"}}  >
+                  US Contact
+                </Link>
               </div>
             </div>
           </div>
@@ -82,13 +101,14 @@ const Problem2 = () => {
               <div className="modal-footer">
                 <button 
                   type="button" 
-                  className="btn btn-secondary" 
+                  className="btn btn-outline" 
                   onClick={() => setModalUSOpen(false)}
+                  style={{  border:" 2px solid #46139f"}}
                 >
                   Close
                 </button>
-                <button type="button" className="btn btn-primary">
-                  Save changes
+                <button type="button" className="btn"  style={{color:" #ff9f50"}}>
+                  All Contact
                 </button>
               </div>
             </div>
