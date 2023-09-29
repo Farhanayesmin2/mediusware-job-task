@@ -16,14 +16,18 @@ const Problem1 = () => {
         setName('');
         setStatus('');
     }
-    const filteredDataShowed = data.filter((d) => 
-    show === 'all' || show === d.status.toLowerCase()
-).sort((a, b) => {
-    const order = ['active', 'completed'];
-    return order.indexOf(a.status.toLowerCase()) - order.indexOf(b.status.toLowerCase());
-});
-console.log("Data is here", data)
-console.log(filteredDataShowed)
+    const filteredDataShowed = data
+    .filter((d) => show === 'all' || show === d.status.toLowerCase())
+    .sort((a, b) => {
+        const statusOrder = ['active', 'completed'];
+        const orderA = statusOrder.indexOf(a.status.toLowerCase());
+        const orderB = statusOrder.indexOf(b.status.toLowerCase());
+        if (orderA === -1 && orderB === -1) return 0; 
+        if (orderA === -1) return 1; 
+        if (orderB === -1) return -1; 
+        return orderA - orderB; 
+    });
+
     return (
 
         <div className="container">
