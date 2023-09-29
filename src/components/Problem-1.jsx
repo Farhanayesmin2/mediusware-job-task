@@ -16,8 +16,14 @@ const Problem1 = () => {
         setName('');
         setStatus('');
     }
+    const filteredDataShowed = data.filter((d) => 
+    show === 'all' || show === d.status.toLowerCase()
+).sort((a, b) => {
+    const order = ['active', 'completed'];
+    return order.indexOf(a.status.toLowerCase()) - order.indexOf(b.status.toLowerCase());
+});
 console.log("Data is here", data)
-
+console.log(filteredDataShowed)
     return (
 
         <div className="container">
@@ -57,7 +63,12 @@ console.log("Data is here", data)
                         </tr>
                         </thead>
                         <tbody>
-                        
+                        {filteredDataShowed.map((d, index) => (
+                    <tr key={index}>
+                        <td>{d.name}</td>
+                        <td>{d.status}</td>
+                    </tr>
+                ))}
                         </tbody>
                     </table>
                 </div>
