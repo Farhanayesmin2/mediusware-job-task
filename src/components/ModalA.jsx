@@ -5,21 +5,16 @@ const ModalA = ({ toggleA, toggleB, toggleC, onlyEven, setOnlyEven }) => {
 
   const [data, setData] = useState();
   const [country, setCountry] = useState("bangladesh");
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [page_size, setPageSize] = useState(10);
   const [isEven, setIsEven] = useState(false)
 
 
-// const fetchData = async () => {
-//   const response = await fetch(`https://contact.mediusware.com/api/country-contacts/bangladesh`);
-//   const jsonData = await response.json();
-//   setData(jsonData.results);
-// };
-
 const fetchData = async () => {
   try {
-    const response = await fetch('https://contact.mediusware.com/api/country-contacts/bangladesh/');
+    const response = await fetch(`https://contact.mediusware.com/api/contacts/?search=${search}&page=${page}&page_size=${page_size}`);
+    // const response = await fetch('https://contact.mediusware.com/api/country-contacts/bangladesh/');
     if (!response) {
       throw new Error('Network response was not ok');
     }
@@ -35,13 +30,6 @@ useEffect(() => {
 }, []);
 
 console.log(data)
-// const fetchData = async () => {
-//   const response = await axios.get(
-//       `https://contact.mediusware.com/api/country-contacts/${country}`);
-//   setData(response.data.results);
-// };
-
-// const filteredData = data.filter((d, index)=> index === 0 || index%2 === 0)
 
 
 useEffect(() => {
@@ -49,16 +37,16 @@ useEffect(() => {
 }, [country])
 
 
-// const useData = isEven?filteredData:data
+const useData = isEven?filteredData:data
 
 
-// const table = data.map((row, index) => (
-//                                   <tr key={index}>
-//                                   <th>{row.id}</th>
-//                                   <th>{row.phone}</th>
-//                                   <th>{row.country?.name}</th>
-//                                   </tr>
-//                               ))
+const table = data.map((row, index) => (
+                                  <tr key={index}>
+                                  <th>{row.id}</th>
+                                  <th>{row.phone}</th>
+                                  <th>{row.country?.name}</th>
+                                  </tr>
+                              ))
   
   return (
     <div className="modal" tabIndex="-1" style={{ display: 'block' }}>
@@ -80,7 +68,7 @@ useEffect(() => {
                         </tr>
                         </thead>
                         <tbody>
-                          {/* {table} */}
+                          {table}
                         </tbody>
                     </table>
           </div>
