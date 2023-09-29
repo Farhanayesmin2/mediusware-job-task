@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-// import { useHistory } from 'react-router-dom';
+
 import ModalA from './ModalA';
-import ModalB from './ModalB.jsx';
+import ModalB from './ModalB';
 import ModalC from './ModalC';
 
 const Problem2 = () => {
@@ -10,7 +10,7 @@ const Problem2 = () => {
   const [isModalCOpen, setModalCOpen] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
   const [onlyEven, setOnlyEven] = useState(false);
-//   const history = useHistory();
+//    const history = useHistory();
 
   const toggleModalA = () => {
     setModalAOpen(!isModalAOpen);
