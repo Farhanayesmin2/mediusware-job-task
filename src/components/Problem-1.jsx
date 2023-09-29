@@ -29,7 +29,7 @@ console.log("Data is here", data)
                             <input type="text" className="form-control" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/>
                         </div>
                         <div className="col-auto">
-                            <input type="text" className="form-control" placeholder="Status"/>
+                            <input type="text" className="form-control" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} />
                         </div>
                         <div className="col-auto">
                             <button type="submit" className="btn btn-primary">Submit</button>
