@@ -7,9 +7,7 @@ const ModalA = ({ toggleA, toggleB, toggleC, onlyEven, setOnlyEven }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          'https://contact.mediusware.com/api/contacts/'
-        );
+        const response = await fetch('https://contact.mediusware.com/api/contacts/');
         if (!response.ok) {
           throw new Error('Network response was not ok ' + response.statusText);
         }
@@ -22,7 +20,9 @@ const ModalA = ({ toggleA, toggleB, toggleC, onlyEven, setOnlyEven }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [onlyEven]);
+
+  const filteredData = onlyEven ? data.filter(contact => contact.id % 2 === 0) : data;
 
   return (
     <div className="modal" tabIndex="-1" style={{ display: 'block' }}>
@@ -47,7 +47,7 @@ const ModalA = ({ toggleA, toggleB, toggleC, onlyEven, setOnlyEven }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((row) => (
+                  {filteredData.map((row) => (
                     <tr key={row.id}>
                       <th>{row.id}</th>
                       <th>{row.phone}</th>
@@ -59,6 +59,10 @@ const ModalA = ({ toggleA, toggleB, toggleC, onlyEven, setOnlyEven }) => {
             )}
           </div>
           <div className="modal-footer">
+            <div style={{ flex: '1 0 auto' }}>
+              <input type="checkbox" id="onlyEven" checked={onlyEven} onChange={() => setOnlyEven(!onlyEven)} />
+              <label htmlFor="onlyEven">Only even</label>
+            </div>
             <button
               type="button"
               className="btn btn-outline"
