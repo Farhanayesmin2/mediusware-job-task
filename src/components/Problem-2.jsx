@@ -14,12 +14,12 @@ const Problem2 = () => {
 
   const toggleModalA = () => {
     setModalAOpen(!isModalAOpen);
-    history.push(isModalAOpen ? '/' : '/modal-a');
+   // history.push(isModalAOpen ? '/' : '/modal-a');
   };
 
   const toggleModalB = () => {
     setModalBOpen(!isModalBOpen);
-    history.push(isModalBOpen ? '/' : '/modal-b');
+   // history.push(isModalBOpen ? '/' : '/modal-b');
   };
 
   const toggleModalC = (contact) => {

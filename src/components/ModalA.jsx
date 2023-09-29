@@ -1,52 +1,29 @@
 import React, { useEffect, useState } from 'react';
 
 const ModalA = ({ toggleA, toggleB, toggleC, onlyEven, setOnlyEven }) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const [data, setData] = useState();
-  const [country, setCountry] = useState("bangladesh");
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const [page_size, setPageSize] = useState(10);
-  const [isEven, setIsEven] = useState(false)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          'https://contact.mediusware.com/api/contacts/'
+        );
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const result = await response.json();
+        setData(result.results || []);
+      } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
-
-const fetchData = async () => {
-  try {
-    const response = await fetch(`https://contact.mediusware.com/api/contacts/?search=${search}&page=${page}&page_size=${page_size}`);
-    // const response = await fetch('https://contact.mediusware.com/api/country-contacts/bangladesh/');
-    if (!response) {
-      throw new Error('Network response was not ok');
-    }
-    const jsonData = await response.json();
-    setData(jsonData.results);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-};
-
-useEffect(() => {
-  fetchData(); // Call the fetchData function when the component mounts
-}, []);
-
-console.log(data)
-
-
-useEffect(() => {
-  fetchData();
-}, [country])
-
-
-const useData = isEven?filteredData:data
-
-
-const table = data.map((row, index) => (
-                                  <tr key={index}>
-                                  <th>{row.id}</th>
-                                  <th>{row.phone}</th>
-                                  <th>{row.country?.name}</th>
-                                  </tr>
-                              ))
-  
   return (
     <div className="modal" tabIndex="-1" style={{ display: 'block' }}>
       <div className="modal-dialog modal-dialog-centered" role="document">
@@ -58,24 +35,46 @@ const table = data.map((row, index) => (
             </button>
           </div>
           <div className="modal-body">
-          <table className="table table-striped ">
-                        <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Country</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                          {table}
-                        </tbody>
-                    </table>
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <table className="table table-striped ">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Country</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((row) => (
+                    <tr key={row.id}>
+                      <th>{row.id}</th>
+                      <th>{row.phone}</th>
+                      <th>{row.country?.name}</th>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-outline" style={{ border: "2px solid #46139f" }} onClick={toggleA}>Close</button>
-            <button type="button" className="btn" style={{ color: "#ff7f50" }} onClick={toggleB}>US Contacts</button>
-            <button type="button" className="btn" style={{ color: "#ff7f50" }} onClick={fetchData}>fetch</button>
-       
+            <button
+              type="button"
+              className="btn btn-outline"
+              style={{ border: "2px solid #46139f" }}
+              onClick={toggleA}
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              className="btn"
+              style={{ color: "#ff7f50" }}
+              onClick={toggleB}
+            >
+              US Contacts
+            </button>
           </div>
         </div>
       </div>
@@ -84,4 +83,3 @@ const table = data.map((row, index) => (
 };
 
 export default ModalA;
-
