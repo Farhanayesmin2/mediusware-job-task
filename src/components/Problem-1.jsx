@@ -3,7 +3,9 @@ import React, {useState} from 'react';
 const Problem1 = () => {
 
     const [show, setShow] = useState('all');
-
+    const [data, setData] = useState([]);
+    const [name, setName] = useState('');
+    const [status, setStatus] = useState('');
     const handleClick = (val) =>{
         setShow(val);
     }
